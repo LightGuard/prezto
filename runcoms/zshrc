@@ -18,3 +18,19 @@ autoload -Uz promptinit
 promptinit
 prompt cloud
 
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+source /usr/local/share/chruby/chruby.sh
+source /usr/local/share/chruby/auto.sh
+chruby ruby-2.5.1
+
+source $HOME/.zsh_completion/oc_completion.sh
+
+export EDITOR=nvim
+export GPG_TTY=`tty`
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/remote/jporter/.sdkman"
+[[ -s "/home/remote/jporter/.sdkman/bin/sdkman-init.sh" ]] && source "/home/remote/jporter/.sdkman/bin/sdkman-init.sh"
