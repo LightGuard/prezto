@@ -13,10 +13,13 @@ fi
 # Customize to your needs...
 alias vim=nvim
 alias view=nvim -R
+alias ls=exa
+alias open=xdg-open
 
 autoload -Uz promptinit
 promptinit
-prompt cloud
+prompt fade yellow
+#prompt cloud
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -24,13 +27,18 @@ export NVM_DIR="$HOME/.nvm"
 
 source /usr/local/share/chruby/chruby.sh
 source /usr/local/share/chruby/auto.sh
-chruby ruby-2.5.1
+chruby ruby-2.6.3
 
-source $HOME/.zsh_completion/oc_completion.sh
+#source $HOME/.zsh_completion/oc_completion.sh
 
 export EDITOR=nvim
 export GPG_TTY=`tty`
+export GRAALVM=$HOME/graalvm/latest
+export GRAALVM_HOME=$GRAALVM
+export JAVA_HOME=/usr/lib/jvm/java-11
+
+export PATH=$HOME/bin:$PATH
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/remote/jporter/.sdkman"
-[[ -s "/home/remote/jporter/.sdkman/bin/sdkman-init.sh" ]] && source "/home/remote/jporter/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="/home/jporter/.sdkman"
+[[ -s "/home/jporter/.sdkman/bin/sdkman-init.sh" ]] && source "/home/jporter/.sdkman/bin/sdkman-init.sh"
