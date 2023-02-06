@@ -1,10 +1,20 @@
+#export GPG_TTY=$TTY
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block, everything else may go below.
 #
-#if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-#fi
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+  autoload -Uz compinit
+  compinit
+fi
 
 #
 # Executes commands at the start of an interactive session.
@@ -19,36 +29,45 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
-alias vim=nvim
-alias view=nvim -R
-alias ls=exa
-alias open=xdg-open
+# Aliases
+alias vim='nvim'
+alias view='nvim -R'
+alias ls='exa'
+alias enable-photos="sudo mkdir /Volumes/T7; sudo chown jporter /Volumes/T7; sudo mount_exfat /dev/disk4s1 /Volumes/T7"
+#alias open=xdg-open
 
-autoload -Uz promptinit
-promptinit
-prompt powerlevel10k
+#autoload -Uz promptinit
+#promptinit
+#prompt powerlevel10k
 
 
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#source /usr/local/share/chruby/chruby.sh
-#source /usr/local/share/chruby/auto.sh
-#chruby ruby-2.6.3
-
 #source $HOME/.zsh_completion/oc_completion.sh
 
 export EDITOR=nvim
-export GPG_TTY=`tty`
-export GRAALVM_HOME=/home/jporter/.sdkman/candidates/java/20.0.0.r11-grl
-export JAVA_HOME=/usr/lib/jvm/java-11
-
 export PATH=$HOME/bin:$PATH
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/jporter/.sdkman"
-[[ -s "/home/jporter/.sdkman/bin/sdkman-init.sh" ]] && source "/home/jporter/.sdkman/bin/sdkman-init.sh"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+source /Users/jporter/.zprezto/modules/prompt/external/powerlevel10k/powerlevel10k.zsh-theme
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
+alias docky="export DOCKER_HOST=unix:///Users/jporter/.colima/default/docker.sock && colima -p default "
+alias colima-k-cd="colima -p k3s-containerd"
+alias k="kubectl"
+
+# Autojump
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/jporter/.sdkman"
+[[ -s "/Users/jporter/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/jporter/.sdkman/bin/sdkman-init.sh"
+
+export GRAALVM_HOME=`sdk home java $(sdk list java | grep installed | grep grl | awk '{ print $10 }')`
+
